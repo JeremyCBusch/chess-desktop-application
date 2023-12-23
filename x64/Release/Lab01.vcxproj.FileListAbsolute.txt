@@ -1,0 +1,2 @@
+C:\_personal_projects\chess\x64\Release\Lab01.exe
+C:\_personal_projects\chess-desktop-application\x64\Release\Lab01.exe

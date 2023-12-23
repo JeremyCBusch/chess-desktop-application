@@ -1,0 +1,11 @@
+
+.vs/Lab01/v16/.suo
+.vs/Lab01/v16/Browse.VC.db
+*.db-shm
+*.db-wal
+*.opendb
+*.ipch
+*.db
+*.log
+*.sqlite
+*.db
