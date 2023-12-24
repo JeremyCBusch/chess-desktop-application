@@ -40,4 +40,5 @@ public:
    void setKingSideCastle(bool kingSideCastle) { this->kingSideCastle = kingSideCastle; }
    void setQueenSideCastle(bool queenSideCastle) { this->queenSideCastle = queenSideCastle; }
    void setPromotion(bool promotion) { this->promotion = promotion; }
+   void setStandardCapture(bool capture) { this->standardCapture = capture; }
 };

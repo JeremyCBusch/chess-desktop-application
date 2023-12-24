@@ -47,14 +47,19 @@ unordered_map<int, Move>* Knight::getPossibleMoves(Position posFrom, Board* boar
 
       r = getPosition().getRow() + delta[i].dRow;
       c = getPosition().getCol() + delta[i].dCol;
+      
+      if (r * 8 + c > 0 && r * 8 + c < 64 && c < 8 && c >= 0) {
 
-      // Black Knight
-      if (!isWhite() && board->isNotBlack(r, c))
-          moves->insert({ r * 8 + c, Move(posFrom, Position(r * 8 + c)) });
+          if (board->getPiece(r, c)->getLetter() == '_')
+              moves->insert({ r * 8 + c, Move(posFrom, Position(r * 8 + c)) });
 
-      // White Knight
-      if (isWhite() && board->isNotWhite(r, c))
-          moves->insert({ r * 8 + c, Move(posFrom, Position(r * 8 + c)) });
+          else if (!board->isSameColor(this, board->getPiece(r, c))) {
+              Move move = Move(posFrom, Position(r * 8 + c));
+              move.setStandardCapture(true);
+              moves->insert({ r * 8 + c, move });
+          }
+      }
+      //TODO: set up not hopping over opposing colors
 
    }
    return moves;

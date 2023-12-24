@@ -2,7 +2,6 @@
 #include "uiDraw.h"
 #include "move.h"
 #include <unordered_map>
-#include <set>
 #pragma once
 
 
@@ -56,6 +55,7 @@ public:
    virtual char getLetter() = 0;
    virtual void display(ogstream& gout) = 0;
    virtual unordered_map<int, Move>* getPossibleMoves(Position posFrom, Board* board, int currentMove) = 0;
+   unordered_map<int, Move>* getPossibleLinearMoves(Delta delta[], Position posFrom, Board* board);
 
    // Operators
    bool operator == (char letter) { return getLetter() == letter; }

@@ -53,12 +53,23 @@ unordered_map<int, Move>* King::getPossibleMoves(Position posFrom, Board* board,
 
       // Black King
       if (r * 8 + c > 0 && r * 8 + c < 64) {
-          if (!board->isSameColor(this, board->getPiece(r * 8 + c)) || board->getPiece(r * 8 + c)->getLetter() == '_')
+
+          if (board->getPiece(r * 8 + c)->getLetter() == '_')
               moves->insert({ r * 8 + c, Move(posFrom, Position(r * 8 + c)) });
+          
+          else if (!board->isSameColor(this, board->getPiece(r * 8 + c)))
+          {
+              Move move = Move(posFrom, Position(r * 8 + c));
+              move.setStandardCapture(true);
+              moves->insert({ r * 8 + c, move });
+          }
+
       }
        
          
    }
+
+
    int row = getPosition().getRow();
    int col = getPosition().getCol();
 
