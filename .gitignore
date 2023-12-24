@@ -9,3 +9,13 @@
 *.log
 *.sqlite
 *.db
+*.vsidx
+*.vsidx
+.vs/Lab01/v17/.suo
+*.vsidx
+*.obj
+*.obj
+*.recipe
+*.ilk
+*.pdb
+*.obj
