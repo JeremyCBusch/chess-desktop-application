@@ -55,7 +55,8 @@ public:
    double getSquareHeight() const { return squareHeight; }
 
    bool isInvalid() const { return location < 0 || location >= 64; }
-   bool isValid() const { return !isInvalid(); }
+   bool isValid() const { return location >= 0 && location < 64;
+   }
 
    // setters
    void setRow(int row);

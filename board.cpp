@@ -152,31 +152,6 @@ void Board::display(int posHover, int posSel)
 
    for (auto it: board)
        it->display(gout);
-
-   //    // DISPLAY KNIGHT
-   //    board[1]->display(gout);
-   //    board[6]-> display(gout);
-   //
-   //    // DISPLAY KNIGHT
-   //    board[57]->display(gout);
-   //    board[62]-> display(gout);
-   //
-   //    // Display ROOK
-   //    board[16]->display(gout);
-   //
-   //    // DISPLAY TEST BISHOP
-   //    board[18]->display(gout);
-   //
-   //    // DISPLAY TEST QUEEN
-   //
-   //    board[20]->display(gout);
-   //
-   //
-   //    // DISPLAY TEST KING
-   //
-   //    board[28]->display(gout);
-
-
 }
 
 void Board::executeMove(Move move)
@@ -186,14 +161,14 @@ void Board::executeMove(Move move)
     Piece* destinationPiece = board[move.getDestination().getLocation()];
     
 
-    simpleSwap(sourcePiece, destinationPiece);
+    swap(sourcePiece, destinationPiece);
 
     sourcePiece->setLastMoveIndex(getCurrentMoveIndex());
     incrementCurrentMoveIndex();
     board[sourcePiece->getPosition().getLocation()]->setNMoves(1);
     
 
-    //TODO: do some research on destructors and allocations because deleting is not working and the pieces are moving around the board...
+    // Standard Capture
     if (move.getIsStandardCapture()) 
     {
         int destinationLocation = destinationPiece->getPosition().getLocation();
@@ -205,7 +180,7 @@ void Board::executeMove(Move move)
         delete destinationPiece;
 ;    }
 
-    ////TODO: execute enpassant
+    // Enpassant
     if (move.getEnPassant()) 
     {  
         int pawnDirection = (sourcePiece->isWhite()) ? 1 : -1; //TODO:  This could use a different name because the values are switched
@@ -217,24 +192,19 @@ void Board::executeMove(Move move)
         Space* space = new Space(row, col, true);
         board.at(row * 8 + col) = space;
 
-        capturedPawn->getPosition().set(8, 8);  // The next best thing to deleting. Sending it to oblivion
-        capturedPawn->setIsDead(true);
         delete capturedPawn;
     }
 
-    ////TODO: castling
+    // Castling
     if (move.getKingSideCastle() || move.getQueenSideCastle()) 
     {
-        //TODO: have the caslting move by the tile next to the rook as opposed to the tile the rook is on
-        int rookColMovement = (move.getKingSideCastle()) ? -2 : 2;
-        Piece *  kingSideRook = board[destinationPiece->getPosition().getLocation() + 1];   // one tile to the right from where the king moves
-        Piece* spacePiece = board[destinationPiece->getPosition().getLocation() -rookColMovement];
+        int rookColMovement = (move.getKingSideCastle()) ? 1 : -1;
+        Piece *  kingSideRook = board[sourcePiece->getPosition().getLocation() + rookColMovement];   // one tile to the right from where the king moves
 
-        simpleSwap(kingSideRook, spacePiece);
-        
+        swap(kingSideRook, sourcePiece);
     }
 
-    ////TODO: promotion
+    // Promotion
     if (move.getPromotion()) 
     { 
         Position positionOfPieceThatMoved = sourcePiece->getPosition();
@@ -245,111 +215,11 @@ void Board::executeMove(Move move)
 
 
 
-void Board::promoteQ(int r, int c, bool white)
+void Board::swap(Piece* piece1, Piece* piece2)
 {
-   Piece* tempPiece = board[r * 8 + c];
-   Queen* newQueen = new Queen(r, c, white);
-   board[r * 8 + c] = newQueen;
-
-
-   delete tempPiece;
-
-}
-
-void Board::castleK(int posFrom, int posTo)
-{
-
-   int rookNewLoc = posFrom + 1;
-   int kingNewLoc = posTo - 1;
-
-   Piece* tempSpace = board[rookNewLoc];
-
-   Piece* tempSpaceKing = board[kingNewLoc];
-
-   // From is King
-   Piece* p1 = board[posFrom];
-
-   // To is Rook
-   Piece* p2 = board[posTo];
-
-
-   // SWAP ROOK WITH SPACE
-   board[rookNewLoc] = p2;
-   Space* newSpace = new Space(posTo / 8, posTo % 8, true);
-   board[posTo] = newSpace;
-
-   board[rookNewLoc]->getPosition() = tempSpace->getPosition();
-
-
-
-   // SWAP KING WITH ROOK
-
-   board[kingNewLoc] = p1;
-   Space* newSpaceKing = new Space(posFrom / 8, posFrom % 8, true);
-   board[posFrom] = newSpaceKing;
-
-   board[kingNewLoc]->getPosition() = tempSpaceKing->getPosition();
-
-
-}
-
-void Board::castleQ(int posFrom, int posTo)
-{
-
-
-   int rookNewLoc = posFrom - 1;
-   int kingNewLoc = posTo + 2;
-
-   Piece* tempSpace = board[rookNewLoc];
-
-   Piece* tempSpaceKing = board[kingNewLoc];
-
-   // From is King
-   Piece* p1 = board[posFrom];
-
-   // To is Rook
-   Piece* p2 = board[posTo];
-
-
-   // SWAP ROOK WITH SPACE
-   board[rookNewLoc] = p2;
-   Space* newSpace = new Space(posTo / 8, posTo % 8, true);
-   board[posTo] = newSpace;
-
-   board[rookNewLoc]->getPosition() = tempSpace->getPosition();
-
-
-
-   // SWAP KING WITH ROOK
-
-   board[kingNewLoc] = p1;
-   Space* newSpaceKing = new Space(posFrom / 8, posFrom % 8, true);
-   board[posFrom] = newSpaceKing;
-
-   board[kingNewLoc]->getPosition() = tempSpaceKing->getPosition();
-
-
-}
-
-
-void Board::capture()
-{
-
-}
-
-
-void Board::simpleSwap(Piece* piece1, Piece* piece2)
-{
-
-
-
     Piece* tempP = board[piece2->getPosition().getLocation()];
     Piece* p1 = board[piece1->getPosition().getLocation()];
     Piece* p2 = board[piece2->getPosition().getLocation()];
-
-
-
-
 
     // Update board
     board[p2->getPosition().getLocation()] = p1;

@@ -2,6 +2,7 @@
 #include "uiDraw.h"
 #include "move.h"
 #include <unordered_map>
+#include <cstring>
 #pragma once
 
 

@@ -73,9 +73,17 @@ unordered_map<int, Move>* King::getPossibleMoves(Position posFrom, Board* board,
    int row = getPosition().getRow();
    int col = getPosition().getCol();
 
-   
+   bool thing;
+   bool thing1;
+   bool thing3;
+   bool thing4;
+   bool thing5;
+   bool thing6;
+   bool thing7;
+
+
    // Black King Check Castling 
-   if (!isWhite() && row == 0)
+   if ((isWhite() && row == 7) || (!isWhite() && row == 0))
    {
       // King Side Castle
 
@@ -83,16 +91,24 @@ unordered_map<int, Move>* King::getPossibleMoves(Position posFrom, Board* board,
       space_2 = getPosition().getCol() + 2;
       space_3 = getPosition().getCol() + 3;
 
+      thing =  board->getPiece(row, space_1)->getLetter() == '_';
+      thing1 = board->getPiece(row, space_2)->getLetter() == '_';
+      thing3 = board->isSameColor(this, board->getPiece(row, space_3));
+      thing4 = tolower(board->getPiece(row, space_3)->getLetter()) == 'r';
+      thing5 = !board->getPiece(row, col)->hasMoved();
+      thing6 = !board->getPiece(row, space_3)->hasMoved();
+
+
       if (
           board->getPiece(row, space_1)->getLetter() == '_' &&
           board->getPiece(row, space_2)->getLetter() == '_' &&
-          board->getPiece(row, space_3)->getLetter() == 'R' &&
-            
-          board->getPiece(row, col)->getNMoves() == 0 &&
-          board->getPiece(row, space_3)->getNMoves() == 0
+          board->isSameColor(this, board->getPiece(row, space_3)) &&
+          tolower(board->getPiece(row, space_3)->getLetter()) == 'r' &&
+          !board->getPiece(row, col)->hasMoved() &&
+          !board->getPiece(row, space_3)->hasMoved()
          )
       {
-          moves->insert({ r * 8 + space_2, Move(posFrom, Position(r * 8 + space_2),false, true, false, false, false)});
+          moves->insert({ row * 8 + space_2, Move(posFrom, Position(row * 8 + space_2),false, true, false, false, false)});
       }
 
       // Queen Side Castle
@@ -101,56 +117,39 @@ unordered_map<int, Move>* King::getPossibleMoves(Position posFrom, Board* board,
       space_3 = getPosition().getCol() - 3;
       space_4 = getPosition().getCol() - 4;
 
+
+      Position position = board->getPiece(row, space_4)->getPosition();
+      int location = board->getPiece(row, space_4)->getPosition().getLocation();
+      bool iswhittee = board->getPiece(row, space_4)->isWhite();
+
+      thing = board->getPiece(row, space_1)->getLetter() == '_';
+      thing1 = board->getPiece(row, space_2)->getLetter() == '_';
+      thing3 = board->getPiece(row, space_3)->getLetter() == '_';
+      thing4 = board->isSameColor(this, board->getPiece(row, space_4));
+      thing5 = tolower(board->getPiece(row, space_4)->getLetter()) == 'r';
+      thing6 = !board->getPiece(row, col)->hasMoved();
+      thing7 = !board->getPiece(row, space_3)->hasMoved();
+
+      //TEST
+
+
+
+      //TODO black queen side castling is throwing an error. find out why
+
       if (
          board->getPiece(row, space_1)->getLetter() == '_' &&
          board->getPiece(row, space_2)->getLetter() == '_' &&
          board->getPiece(row, space_3)->getLetter() == '_' &&
-         board->getPiece(row, space_4)->getLetter() == 'R' &&
-         
-         board->getPiece(row, col)->getNMoves() == 0 &&
-         board->getPiece(row, space_4)->getNMoves() == 0
+         board->isSameColor(this, board->getPiece(row, space_4)) &&
+         tolower(board->getPiece(row, space_4)->getLetter()) == 'r' &&
+         !board->getPiece(row, col)->hasMoved() &&
+         !board->getPiece(row, space_3)->hasMoved()
          )
       {
-          moves->insert({ r * 8 + space_3, Move(posFrom, Position(r * 8 + space_3), false, false, true, false, false) });
+          moves->insert({ row * 8 + space_3, Move(posFrom, Position(row * 8 + space_3), false, false, true, false, false) });
       }
    }
    
-   // White King Check Castling 
-   if (isWhite() && row == 7)
-   {
-      space_1 = getPosition().getCol() + 1;
-      space_2 = getPosition().getCol() + 2;
-      space_3 = getPosition().getCol() + 3;
-      if (
-         board->getPiece(row, space_1)->getLetter() == '_' &&
-         board->getPiece(row, space_2)->getLetter() == '_' &&
-         board->getPiece(row, space_3)->getLetter() == 'r' &&
-         
-         board->getPiece(row, col)->getNMoves() == 0 &&
-         board->getPiece(row, space_3)->getNMoves() == 0
-         )
-      {
-          moves->insert({ r * 8 + space_2, Move(posFrom, Position(r * 8 + space_2), false, true, false, false, false) });
-      }
-
-      // Queen Side Castle
-      space_1 = getPosition().getCol() - 1;
-      space_2 = getPosition().getCol() - 2;
-      space_3 = getPosition().getCol() - 3;
-      space_4 = getPosition().getCol() - 4;
-
-      if (
-         board->getPiece(row, space_1)->getLetter() == '_' &&
-         board->getPiece(row, space_2)->getLetter() == '_' &&
-         board->getPiece(row, space_3)->getLetter() == '_' &&
-         board->getPiece(row, space_4)->getLetter() == 'r' &&
-         
-         board->getPiece(row, col)->getNMoves() == 0 &&
-         board->getPiece(row, space_4)->getNMoves() == 0
-         )
-      {
-          moves->insert({ r * 8 + space_3, Move(posFrom, Position(r * 8 + space_3), false, false, true, false, false) });
-      }
-   }
+   
    return moves;
 }
