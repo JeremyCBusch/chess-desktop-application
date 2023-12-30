@@ -9,6 +9,7 @@
 using namespace std;
 
 
+
 class Move;
 class Board;
 
@@ -23,16 +24,13 @@ protected:
 
 public:
    // Constructors
-    Piece() {};
+   Piece() {};
    Piece(int r, int c, bool white = true);
 
    Piece(const Piece& piece) { *this = piece; }
 
    //TODO: implement destuctor somehow
-   virtual ~Piece() 
-   {
-
-   };
+   virtual ~Piece() {};
 
 
    bool isWhite() const { return this->position.isValid() ? fWhite : false; }
@@ -40,23 +38,19 @@ public:
    int getNMoves()const { return nMoves; }
    bool hasMoved() const { return nMoves > 0; }
    bool getIsDead() { return isDead; }
-
    Position& getPosition() { return position; }
-
-   bool justMoved(int currentMove) const
-   {
-      return (currentMove - 1 == lastMoveIndex);
-   }
+   bool justMoved(int currentMove) const { return (currentMove - 1 == lastMoveIndex); }
 
    void setNMoves(int nMove) { nMoves += nMove; }
    void setLastMoveIndex(int currentMoveIndex) { lastMoveIndex = currentMoveIndex; }
    void setIsDead(bool newIsDead) { isDead = newIsDead; }
+   unordered_map<int, Move>* getPossibleLinearMoves(Delta delta[], Position posFrom, Board* board);
 
    // Virtual Methods
    virtual char getLetter() = 0;
    virtual void display(ogstream& gout) = 0;
    virtual unordered_map<int, Move>* getPossibleMoves(Position posFrom, Board* board, int currentMove) = 0;
-   unordered_map<int, Move>* getPossibleLinearMoves(Delta delta[], Position posFrom, Board* board);
+
 
    // Operators
    bool operator == (char letter) { return getLetter() == letter; }
@@ -73,8 +67,6 @@ public:
       return *this;
    }
 
-   // Assignment Operator Piece
-   //const Piece& operator = (const Piece& rhs);
 
 };
 

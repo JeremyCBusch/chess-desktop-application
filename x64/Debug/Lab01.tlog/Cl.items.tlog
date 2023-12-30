@@ -7,6 +7,7 @@ C:\_personal_projects\chess-desktop-application\knight.cpp;C:\_personal_projects
 C:\_personal_projects\chess-desktop-application\move.cpp;C:\_personal_projects\chess-desktop-application\x64\Debug\move.obj
 C:\_personal_projects\chess-desktop-application\Pawn.cpp;C:\_personal_projects\chess-desktop-application\x64\Debug\Pawn.obj
 C:\_personal_projects\chess-desktop-application\piece.cpp;C:\_personal_projects\chess-desktop-application\x64\Debug\piece.obj
+C:\_personal_projects\chess-desktop-application\Point.cpp;C:\_personal_projects\chess-desktop-application\x64\Debug\Point.obj
 C:\_personal_projects\chess-desktop-application\Position.cpp;C:\_personal_projects\chess-desktop-application\x64\Debug\Position.obj
 C:\_personal_projects\chess-desktop-application\Queen.cpp;C:\_personal_projects\chess-desktop-application\x64\Debug\Queen.obj
 C:\_personal_projects\chess-desktop-application\Rook.cpp;C:\_personal_projects\chess-desktop-application\x64\Debug\Rook.obj

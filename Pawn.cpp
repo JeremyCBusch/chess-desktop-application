@@ -10,6 +10,7 @@
 
 #include "pawn.h"
 
+
 using namespace std;
 char Pawn::getLetter()
 {
@@ -44,7 +45,7 @@ unordered_map<int, Move>* Pawn::getPossibleMoves(Position posFrom, Board* board,
 
    
    // FORWARD TWO BLANK SPACE
-   if (board->isValidboardIndex((PawnRow + (forwardDirection * 2)) * 8 + PawnCol)) {
+   if (Board::isValidboardIndex((PawnRow + (forwardDirection * 2)) * 8 + PawnCol)) {
        if (board->getPiece((PawnRow + (forwardDirection * 2)) * 8 + PawnCol)->getLetter() == '_' && !selectedPawn->hasMoved())
        {
            Move move = Move(posFrom, Position((PawnRow + (forwardDirection * 2)) * 8 + PawnCol));
@@ -53,7 +54,7 @@ unordered_map<int, Move>* Pawn::getPossibleMoves(Position posFrom, Board* board,
    }
 
    // FORWARD ONE BLANK SPACE
-   if (board->isValidboardIndex((PawnRow + (forwardDirection * 1)) * 8 + PawnCol)) {
+   if (Board::isValidboardIndex((PawnRow + (forwardDirection * 1)) * 8 + PawnCol)) {
        if (board->getPiece((PawnRow + (forwardDirection * 1)) * 8 + PawnCol)->getLetter() == '_')
        {
            Move move = Move(posFrom, Position((PawnRow + (forwardDirection * 1)) * 8 + PawnCol));
@@ -64,10 +65,10 @@ unordered_map<int, Move>* Pawn::getPossibleMoves(Position posFrom, Board* board,
 
 
    // ATTACK LEFT
-   if (board->isValidboardIndex(PawnRow + forwardDirection, PawnCol - 1)) {
+   if (Board::isValidboardIndex(PawnRow + forwardDirection, PawnCol - 1)) {
        preyPawn = board->getPiece(PawnRow + forwardDirection, PawnCol - 1);
 
-       if (!board->isSameColor(selectedPawn, preyPawn) && preyPawn->getLetter() != '_' && selectedPawn->getPosition().getRow() + forwardDirection == preyPawn->getPosition().getRow()) {
+       if (!Board::isSameColor(selectedPawn, preyPawn) && preyPawn->getLetter() != '_' && selectedPawn->getPosition().getRow() + forwardDirection == preyPawn->getPosition().getRow()) {
            Move move = Move(posFrom, Position((PawnRow + (forwardDirection * 1)) * 8 + PawnCol - 1), false, false, false, false, true);
            moves->insert({ (PawnRow + (forwardDirection * 1)) * 8 + PawnCol - 1, move });
        }
@@ -76,10 +77,10 @@ unordered_map<int, Move>* Pawn::getPossibleMoves(Position posFrom, Board* board,
    
 
    // ATTACK RIGHT
-   if (board->isValidboardIndex(PawnRow + forwardDirection, PawnCol + 1)) {
+   if (Board::isValidboardIndex(PawnRow + forwardDirection, PawnCol + 1)) {
        preyPawn = board->getPiece(PawnRow + forwardDirection, PawnCol + 1);
 
-       if (!board->isSameColor(selectedPawn, preyPawn) && preyPawn->getLetter() != '_' && selectedPawn->getPosition().getRow() + forwardDirection == preyPawn->getPosition().getRow()) {
+       if (!Board::isSameColor(selectedPawn, preyPawn) && preyPawn->getLetter() != '_' && selectedPawn->getPosition().getRow() + forwardDirection == preyPawn->getPosition().getRow()) {
            Move move = Move(posFrom, Position((PawnRow + (forwardDirection * 1)) * 8 + PawnCol + 1), false, false, false, false, true);
            moves->insert({ (PawnRow + (forwardDirection * 1)) * 8 + PawnCol + 1, move });
        }
@@ -87,13 +88,13 @@ unordered_map<int, Move>* Pawn::getPossibleMoves(Position posFrom, Board* board,
 
 
    // ENPASSANT DIAGONAL LEFT
-   if (board->isValidboardIndex(PawnRow + forwardDirection, PawnCol - 1)) {
+   if (Board::isValidboardIndex(PawnRow + forwardDirection, PawnCol - 1)) {
        preyPawn = board->getPiece(PawnRow, PawnCol - 1);
        PieceBehindPreyPawn = board->getPiece(PawnRow + forwardDirection, PawnCol - 1);
 
        if (preyPawn->justMoved(board->getCurrentMoveIndex()) &&
            preyPawn->getNMoves() == 1 &&
-           !board->isSameColor(selectedPawn, preyPawn) &&
+           !Board::isSameColor(selectedPawn, preyPawn) &&
            PieceBehindPreyPawn->getLetter() == '_')
        {
            Move move = Move(posFrom, Position((PawnRow + (forwardDirection * 1)) * 8 + PawnCol - 1), true, false, false, false, false);
@@ -103,13 +104,13 @@ unordered_map<int, Move>* Pawn::getPossibleMoves(Position posFrom, Board* board,
 
    
    // ENPASSANT DIAGONAL RIGHT
-   if (board->isValidboardIndex(PawnRow + forwardDirection, PawnCol + 1)) {
+   if (Board::isValidboardIndex(PawnRow + forwardDirection, PawnCol + 1)) {
        preyPawn = board->getPiece(PawnRow, PawnCol + 1);
        PieceBehindPreyPawn = board->getPiece(PawnRow + forwardDirection, PawnCol + 1);
 
        if (preyPawn->justMoved(board->getCurrentMoveIndex()) &&
            preyPawn->getNMoves() == 1 &&
-           !board->isSameColor(selectedPawn, preyPawn) &&
+           !Board::isSameColor(selectedPawn, preyPawn) &&
            PieceBehindPreyPawn->getLetter() == '_')
        {
            Position posTo = Position(PieceBehindPreyPawn->getPosition().getLocation());
@@ -125,4 +126,15 @@ unordered_map<int, Move>* Pawn::getPossibleMoves(Position posFrom, Board* board,
    }
 
    return moves;
+}
+
+void Pawn::markMovesAsCheck(unordered_map<int, Move>* moves, const int board[])
+{
+    //Iterate through all of the moves
+    for (auto it = moves->begin(); it != moves->end(); it++) {
+        // Set the stage: AKA create a new board based on the current move
+         
+        //  get the possible moves for that piece
+    }
+    
 }

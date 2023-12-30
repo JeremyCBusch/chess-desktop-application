@@ -56,3 +56,5 @@ unordered_map<int, Move>* Piece::getPossibleLinearMoves(Delta delta[], Position 
     }
     return moves;
 }
+
+

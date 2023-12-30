@@ -31,11 +31,11 @@ public:
    void display(int posHover, int posSel);
    Piece* get(Position pos) { return board[pos.getLocation()]; }
    Piece* getPiece(int pos) { return board[pos]; };
-   bool isSameColor(Piece* piece1, Piece* piece2) { return piece1->isWhite() == piece2->isWhite(); }
+   static bool isSameColor(Piece* piece1, Piece* piece2) { return piece1->isWhite() == piece2->isWhite(); }
    void executeMove(Move move);
-   bool isValidboardIndex(int index) { return index > 0 && index < 64; }
-   bool isValidboardIndex(int row, int col) { return row * 8 + col > 0 && row * 8 + col < 64; }
-
+   static bool isValidboardIndex(int index) { return index > 0 && index < 64; }
+   static bool isValidboardIndex(int row, int col) { return row * 8 + col > 0 && row * 8 + col < 64; }
+   //vector<Piece*> getBoardCopy(){ return }
 
    //Piece** getBoard() { return board; };
 
@@ -51,18 +51,13 @@ public:
 
 
    void reset();
-   void move(int posFrom, int posTo);
-   void displayPieces();
 
-   void promoteQ(int r, int c, bool white);
 
 
 
    void swap(Piece* piece1, Piece* piece2);
 
-   void castleK(int from, int To);
 
-   void castleQ(int posFrom, int posTo);
 
 
    // Assignment Operator

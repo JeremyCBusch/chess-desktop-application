@@ -43,6 +43,10 @@
 
 using namespace std;
 
+// Text :
+const int RGB_TEXT_WHITE[] = {126, 189, 194};
+const int RGB_TEXT_BLACK[] = { 255, 255, 255 };
+
 // pieces: black and white
 const int RGB_WHITE[] = { 255, 255, 255 };
 const int RGB_BLACK[] = { 0, 0, 0 };
@@ -67,7 +71,7 @@ void ogstream::flush()
         // newline triggers an buffer flush and a move down
         if (*it == '\n')
         {
-            drawText(x, y, sOut.c_str());
+            drawText(x, y, RGB_TEXT_BLACK, sOut.c_str());
             sOut.clear();
             x -= 10;
         }
@@ -78,12 +82,24 @@ void ogstream::flush()
     // put the text on the screen
     if (!sOut.empty())
     {
-        drawText(x, y, sOut.c_str());
+        drawText(x, y, RGB_TEXT_BLACK, sOut.c_str());
         x -= 10;
     }
 
     // reset the buffer
     str("");
+}
+
+/************************************************************************
+* GL COLOR
+* Set the color on the board
+*   INPUT  rgb  RGB color in integers (0...255)
+*************************************************************************/
+void glColor(const int* rgb)
+{
+    glColor3f((GLfloat)(rgb[0] / 256.0),
+        (GLfloat)(rgb[1] / 256.0),
+        (GLfloat)(rgb[2] / 256.0));
 }
 
 /*************************************************************************
@@ -92,9 +108,11 @@ void ogstream::flush()
  *   INPUT  topLeft   The top left corner of the text
  *          text      The text to be displayed
  ************************************************************************/
-void ogstream::drawText(int x, int y, const char* text) const
+void ogstream::drawText(int x, int y, const int * color, const char* text) const
 {
     void* pFont = GLUT_TEXT;
+
+    glColor(color);
 
     // prepare to draw the text from the top-left corner
     glRasterPos2f((GLfloat)x, (GLfloat)y);
@@ -104,17 +122,7 @@ void ogstream::drawText(int x, int y, const char* text) const
         glutBitmapCharacter(pFont, *p);
 }
 
-/************************************************************************
-* GL COLOR
-* Set the color on the board
-*   INPUT  rgb  RGB color in integers (0...255)
-*************************************************************************/
-void glColor(const int * rgb)
-{
-   glColor3f((GLfloat)(rgb[0] / 256.0), 
-             (GLfloat)(rgb[1] / 256.0),
-             (GLfloat)(rgb[2] / 256.0));
-}
+
 
 /************************************************************************
 * DRAW Piece
@@ -423,3 +431,13 @@ void ogstream::drawPossible(Move move)
    // finish the drawing
    glEnd();
 }
+
+void ogstream::drawTurn(int numberOfMoves)
+{
+    if (numberOfMoves % 2 == 0)
+        drawText(50, 150, RGB_TEXT_BLACK, "Black's Turn");
+    else
+        drawText(50, 150, RGB_TEXT_WHITE, "White's Turn");
+}
+
+

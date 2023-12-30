@@ -14,6 +14,12 @@
 #include <sstream>    // for OSTRINGSTRING
 #include "move.h"
 using std::string;
+#include <string>     // To display text on the screen
+#include <cmath>      // for M_PI, sin() and cos()
+#include <algorithm>  // used for min() and max()
+using std::string;
+using std::min;
+using std::max;
 
  /*************************************************************************
   * GRAPHICS STREAM
@@ -45,6 +51,10 @@ public:
     virtual void drawSelected(int position);
     virtual void drawHover(   int position);
     virtual void drawPossible(Move move);
+    virtual void drawTurn(int numberOfMoves);
+    // Put text at location X, Y
+    void drawText(int x, int y, const int* color, const char* text) const;
+
 
 protected:
     int x; // location of text on the screen
@@ -67,6 +77,4 @@ private:
     // Draw a piece with a collection of rectangles
     void drawPiece(int x, int y, bool black, Rect rectangle[], int num) const;
 
-    // Put text at location X, Y
-    void drawText(int x, int y, const char* text) const;
 };

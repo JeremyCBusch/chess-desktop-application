@@ -3,6 +3,7 @@
 #include "uiInteract.h"
 #include "uiDraw.h"
 #include "position.h"
+#include "Point.h"
 #include "board.h"
 #include "game.h"
 #include "pawn.h"
@@ -21,16 +22,13 @@ using namespace std;
 /**
 WELCOME TO JEREMY'S TODO LIST
 
-6. Add text to show whos turn it is
-0. have an abstract get linaer possible moves. based on rook method that I designed
-1. change from passing smith notation to move class
 3. so if we can add functionality to the piece class to for derived classes to inherit
 4. Add functionality for capturing of non pawn pieces.
-5. fix weird issue with pieces not being able to finish its run (might be related to capturing
-4. fix castling
 7. Add winner screen. perhaps try to make a 3d cube...?
-9. figure out how to make an executable with c++
+8. add a header for text descriptions and buttons for promotion
+9. show text when king is in check
 20. allow promotion to any piece
+
 */
 
 

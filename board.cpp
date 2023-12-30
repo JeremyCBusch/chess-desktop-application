@@ -138,6 +138,7 @@ void Board::display(int posHover, int posSel)
    gout.drawHover(posHover);
    gout.drawSelected(posSel);
 
+
    // If the selected Position was valid draw the possible moves;
    if (posSel >= 0 && posSel < 64)
    {
@@ -152,6 +153,8 @@ void Board::display(int posHover, int posSel)
 
    for (auto it: board)
        it->display(gout);
+
+   gout.drawTurn(currentMoveIndex);
 }
 
 void Board::executeMove(Move move)

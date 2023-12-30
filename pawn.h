@@ -33,5 +33,7 @@ public:
    char getLetter();
    void display(ogstream& gout);
    unordered_map<int, Move>* getPossibleMoves(Position posFrom, Board* board, int currentMove);
+   void markMovesAsCheck(unordered_map<int, Move>* moves, const int board[]);
+   
 };
 
