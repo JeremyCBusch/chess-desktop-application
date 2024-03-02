@@ -1,21 +1,5 @@
 
-.vs/Lab01/v16/.suo
-.vs/Lab01/v16/Browse.VC.db
-*.db-shm
-*.db-wal
-*.opendb
+*.vsidx
 *.ipch
+*.tlog
 *.db
-*.log
-*.sqlite
-*.db
-*.vsidx
-*.vsidx
-.vs/Lab01/v17/.suo
-*.vsidx
-*.obj
-*.obj
-*.recipe
-*.ilk
-*.pdb
-*.obj
