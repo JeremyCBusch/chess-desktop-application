@@ -155,6 +155,7 @@
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Queen.cpp" />
     <ClCompile Include="Rook.cpp" />
+    <ClCompile Include="serverConnector.cpp" />
     <ClCompile Include="Space.cpp" />
     <ClCompile Include="uiDraw.cpp" />
     <ClCompile Include="uiInteract.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="queen.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="rook.h" />
+    <ClInclude Include="serverConnector.h" />
     <ClInclude Include="space.h" />
     <ClInclude Include="uiDraw.h" />
     <ClInclude Include="uiInteract.h" />

@@ -25,9 +25,9 @@ void Pawn::display(ogstream& gout)
    gout.drawPawn(position.getLocation(), !fWhite);
 }
 
-unordered_map<int, Move> Pawn::getPossibleMoves(Position posFrom, Board* board, int currentMove)
+unordered_map<int, Move> Pawn::getPossibleMoves(Position posFrom, Board* board, int currentMove, bool isPlayerWhite)
 {
-    return getPossibleMovesSimpleBoard(posFrom, currentMove, board->getSimpleBoardCopy(), true);
+    return getPossibleMovesSimpleBoard(posFrom, currentMove, board->getSimpleBoardCopy(), true, isPlayerWhite);
 }
 
 
@@ -35,7 +35,7 @@ unordered_map<int, Move> Pawn::getPossibleMoves(Position posFrom, Board* board, 
 
 
 
-unordered_map<int, Move> Pawn::getPossibleMovesSimpleBoard(Position posFrom, int currentMove, vector<char>* board, bool checkForCheck)
+unordered_map<int, Move> Pawn::getPossibleMovesSimpleBoard(Position posFrom, int currentMove, vector<char>* board, bool checkForCheck, bool isPlayerWhite)
 {
     unordered_map<int, Move> moves = unordered_map<int, Move>();
 
@@ -49,7 +49,8 @@ unordered_map<int, Move> Pawn::getPossibleMovesSimpleBoard(Position posFrom, int
     int location = posFrom.getLocation();
     int forwardDirection = (isWhite()) ? -1 : 1;
 
-    if ((currentMove % 2 == 1 && isWhite() == false) || currentMove % 2 == 0 && isWhite() == true) {
+
+    if (!isPlayersTurn(isPlayerWhite, currentMove) || isPlayerWhite != isWhite()) {
         return moves;
     }
 
@@ -129,7 +130,7 @@ unordered_map<int, Move> Pawn::getPossibleMovesSimpleBoard(Position posFrom, int
             it->second.setPromotion(true);
 
         if (checkForCheck) {
-            if (isCheckMove(it->second, board, currentMove))
+            if (isCheckMove(it->second, board, currentMove, isPlayerWhite))
                 it->second.setisCheck(true);
         }
     }
@@ -140,13 +141,13 @@ unordered_map<int, Move> Pawn::getPossibleMovesSimpleBoard(Position posFrom, int
 
 
 
-bool Pawn::isCheckMove(Move move, vector<char>* board, int currentMove)
+bool Pawn::isCheckMove(Move move, vector<char>* board, int currentMove, bool isPlayerWhite)
 {
     Board::executeMoveOnFakeBoard(move, board);
 
     Position newPosFrom = move.getDestination();
 
-    unordered_map<int, Move> possibleMoves = getPossibleMovesSimpleBoard(newPosFrom, currentMove + 2 /*plus two for colors next move*/, board, false);
+    unordered_map<int, Move> possibleMoves = getPossibleMovesSimpleBoard(newPosFrom, currentMove + 2 /*plus two for colors next move*/, board, false, isPlayerWhite);
 
     for (auto it = possibleMoves.begin(); it != possibleMoves.end(); it++) {
         if (board->at(it->second.getDestination().getLocation()) == 'k' || board->at(it->second.getDestination().getLocation()) == 'K')

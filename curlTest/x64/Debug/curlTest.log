@@ -1,5 +1,9 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (curlTest.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   chess.cpp
-  gameSelector.cpp
-  Generating Code...
+C:\_personal_projects\chess-desktop-application\curlTest\serverConnector.h(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'chess.cpp')
+  
+C:\_personal_projects\chess-desktop-application\curlTest\serverConnector.h(22,2): warning C4091: 'static ': ignored on left of 'serverConnector' when no variable is declared
+  (compiling source file 'chess.cpp')
+  
   curlTest.vcxproj -> C:\_personal_projects\chess-desktop-application\x64\Debug\Online Chess Application.exe

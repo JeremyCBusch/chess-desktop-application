@@ -9,8 +9,9 @@
 #include "game.h"
 #include "pawn.h"
 #include "move.h"
-#include "gameSelector.h"
+//#include "gameSelector.h"
 #include "curl/curl.h"
+#include "serverConnector.h"
 using namespace std;
 
 /*************************************
@@ -23,6 +24,8 @@ using namespace std;
 
 /**
 WELCOME TO JEREMY'S TODO LIST
+
+
 
 3. so if we can add functionality to the piece class to for derived classes to inherit
 4. Add functionality for capturing of non pawn pieces.
@@ -53,18 +56,18 @@ void callBack(Interface* pUI, void* p)
    int currentMoveIndex;
 
 
-   if (pUI->getPreviousPosition() >= 0 && pUI->getPreviousPosition() < 64)
+   if (pUI->getPreviousPosition() >= 0 && pUI->getPreviousPosition() < 64 && pUI->getSelectPosition() >= 0 && pUI->getSelectPosition() < 64)
    {
       currentMoveIndex = board->getCurrentMoveIndex();
       Piece* previousPiece = board->getPiece(pUI->getPreviousPosition());
       Piece* currentPiece = board->getPiece(pUI->getSelectPosition());
 
-      moves = previousPiece->getPossibleMoves(previousPiece->getPosition(), board, currentMoveIndex);
+      moves = previousPiece->getPossibleMoves(previousPiece->getPosition(), board, currentMoveIndex, board->getPlayerWhitePieces());
 
       int selectedPosition = pUI->getSelectPosition();
 
 
-      if (moves.count(selectedPosition) > 0)  //I am not sure what this is checking?
+      if (moves.count(selectedPosition) > 0)  
       {
          Move move = moves.at(selectedPosition);
          vector<char>* fakeBoard = board->getSimpleBoardCopy();
@@ -78,13 +81,16 @@ void callBack(Interface* pUI, void* p)
       }
 
    }
+   
 
    //look into deleting moves 
-   // Draw the Board
-   //pUI->getPreviousPosition();
    board->display(pUI->getHoverPosition(), pUI->getSelectPosition());
 
-
+   if (pUI->getSelectPosition() < 67 && pUI->getSelectPosition() > 63) {
+       cout << "clicked on refresh?\n";
+       pUI->clearSelectPosition();
+       serverConnector::ping();
+   }
 }
 
 //#define CURL_STATICLIB
@@ -119,14 +125,16 @@ int main() {
     // on create start a game
     
 
-    gameSelector::menuLoop();
+    bool isPlayerWhite;
+    //isWhite = gameSelector::menuLoop();
+    isPlayerWhite = true;
 
 
    Interface ui("Chess");
 
    //   // Initialize the demo
    //   GameState demo(ptUpperRight);
-   Board board;
+   Board board(isPlayerWhite);
    // set everything into action
 //   ui.run(callBack, &demo);
 

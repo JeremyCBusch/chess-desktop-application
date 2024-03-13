@@ -21,6 +21,12 @@ Piece::Piece(int row, int col, bool isWhite) : position(row, col)
    originalLocation = row * 8 + col;
 }
 
+bool Piece::isPlayersTurn(bool isPlayerWhite, int currentMoveIndex)
+{
+    return (currentMoveIndex % 2 == 0 && !isPlayerWhite) || 
+           (currentMoveIndex % 2 == 1 && isPlayerWhite);
+}
+
 
 unordered_map<int, Move> Piece::getPossibleLinearMoves(Delta delta[], Position posFrom, Board* board)
 {

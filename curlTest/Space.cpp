@@ -13,7 +13,7 @@ void Space::display(ogstream& gout)
 }
 
 
-unordered_map<int, Move> Space::getPossibleMoves(Position posFrom, Board* Board, int currentMove)
+unordered_map<int, Move> Space::getPossibleMoves(Position posFrom, Board* Board, int currentMove, bool isPlayerWhite)
 {
 	return unordered_map<int, Move>();
 }

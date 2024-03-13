@@ -58,6 +58,10 @@ const int RGB_BLACK_SQUARE[] = { 165, 42, 42 };
 // the color of a selected square
 const int RGB_SELECTED[] = { 256, 0, 0 };
 
+// Ribbon
+const int RGB_RIBBON[] = {0,256,0};
+const int RGB_BUTTON[] = { 254,209,72 };
+
 /*************************************************************************
  * DISPLAY the text in the buffer on the screen
  *************************************************************************/
@@ -290,6 +294,9 @@ void ogstream::drawBoard()
    // get ready to draw
    glBegin(GL_QUADS);
 
+
+
+
    for (int row = 0; row < 8; row++)
       for (int col = 0; col < 8; col++)
       {
@@ -435,9 +442,32 @@ void ogstream::drawPossible(Move move)
 void ogstream::drawTurn(int numberOfMoves)
 {
     if (numberOfMoves % 2 == 0)
-        drawText(50, 150, RGB_TEXT_BLACK, "Black's Turn");
+        drawText(4 * 32, 9 * 29.5, RGB_TEXT_WHITE, "Black's Turn");
     else
-        drawText(50, 150, RGB_TEXT_WHITE, "White's Turn");
+        drawText(4 * 32, 9 * 29.5, RGB_TEXT_WHITE, "White's Turn");
+}
+
+void ogstream::drawRefreshButton(int pos)
+{
+    glBegin(GL_QUADS);
+
+    //RIBBON
+    if (pos < 67 && pos > 63)
+        glColor(RGB_BUTTON);
+    else
+        glColor(RGB_RIBBON);
+
+    //                  col          row
+    glVertex2i((GLint)(4),            (GLint)((9 + 0) * 28.75));
+    glVertex2i((GLint)((0 + 2) * 33), (GLint)((9 + 0) * 28.75));
+    glVertex2i((GLint)((0 + 2) * 33), (GLint)((9 + 1) * 28.5));
+    glVertex2i((GLint)(4),            (GLint)((9 + 1) * 28.5));
+    //}
+
+    
+    // done
+    glEnd();
+    drawText(6, 9 * 29.5, RGB_BLACK, "REFRESH");
 }
 
 

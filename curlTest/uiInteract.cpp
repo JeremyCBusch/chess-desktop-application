@@ -54,7 +54,7 @@ int xFromPosition(int position)
 }
 int yFromPosition(int position)
 {
-   return (int)((double)(position / 8) * 32.0);
+   return (int)((double)(position / 8) * 32.0);                                             //TODO: change this
 }
 
 /*********************************************************************
@@ -227,7 +227,8 @@ int      Interface::posHover = -1;
 int      Interface::posSelect = -1;
 int      Interface::posSelectPrevious = -1;
 int      Interface::widthScreen = 32 * 8;
-int      Interface::heightScreen = 32 * 8;
+int      Interface::heightScreen = 32 * 9;      // When I bump this number from 8 to 9 the measurement of the mouse is off
+                                                // we probably are doing some dividing by 8 instead of 9 to create rows
 
 bool          Interface::initialized   = false;
 double        Interface::timePeriod    = 0.2; // default to 5 frames/second
@@ -255,7 +256,7 @@ void Interface::initialize(const char * title)
    // create the window
    int argc = 0;
    glutInit(&argc, NULL);
-   glutInitWindowSize(8 * 32 - 1, 8 * 32 - 1);   // size of the window
+   glutInitWindowSize(8 * 32 - 1, 8 * 32 - 1);   // size of the window                 //TODO: change this
             
    glutInitWindowPosition( 10, 10);                // initial position 
    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);    // double buffering

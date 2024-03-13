@@ -58,7 +58,7 @@ public:
    }
    double getSquareHeight() const
    {
-      return (double)heightScreen / 8.0;
+      return (double)heightScreen / 9.0;
    }
    void setScreen(int width, int height)
    {
@@ -69,8 +69,8 @@ public:
    int positionFromXY(int x, int y) const
    {
       int col =     (int)((double)x / getSquareWidth());
-      int row = 7 - (int)((double)y / getSquareHeight());
-      return (col >= 0 && col < 8 && row >= 0 && row < 8) ? row * 8 + col : -1;
+      int row = 8 - (int)((double)y / getSquareHeight());
+      return (col >= 0 && col < 8 && row >= 0 && row < 9) ? row * 8 + col : -1;                                             //TODO: change this
    }
    
    int  getSelectPosition()   const { return posSelect; }

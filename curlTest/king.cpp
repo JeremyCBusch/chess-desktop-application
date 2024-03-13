@@ -23,11 +23,11 @@ void King::display(ogstream& gout)
 }
 
 
-unordered_map<int, Move> King::getPossibleMoves(Position posFrom, Board* board, int currentMove)
+unordered_map<int, Move> King::getPossibleMoves(Position posFrom, Board* board, int currentMove, bool isPlayerWhite)
 {
     unordered_map<int, Move> moves = unordered_map<int, Move>();
    
-   if ((currentMove % 2 == 1 && isWhite() == false) || currentMove % 2 == 0 && isWhite() == true) {
+   if (!isPlayersTurn(isPlayerWhite, currentMove) || isPlayerWhite != isWhite()) {
       return moves;
    }
 

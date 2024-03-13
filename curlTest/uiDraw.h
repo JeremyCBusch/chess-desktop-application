@@ -52,6 +52,7 @@ public:
     virtual void drawHover(   int position);
     virtual void drawPossible(Move move);
     virtual void drawTurn(int numberOfMoves);
+    virtual void drawRefreshButton(int pos);
     // Put text at location X, Y
     void drawText(int x, int y, const int* color, const char* text) const;
 

@@ -23,8 +23,10 @@ private:
    void assertBoard();
    int currentMoveIndex; 
    void incrementCurrentMoveIndex();
+   bool playerIsWhitePieces;
 public:
    Board();
+   Board(bool isWhite);
    Board(ogstream gout);
    int getCurrentMoveIndex() { return currentMoveIndex; }
    bool whiteTurn() { return currentMoveIndex % 2 == 0; } 
@@ -41,6 +43,7 @@ public:
 
    //Piece** getBoard() { return board; };
 
+   bool getPlayerWhitePieces() { return playerIsWhitePieces;  }
    Piece* getPiece(int row, int col)
    {
        return (row * 8 + col >= 0 && row * 8 + col < 64) ? board[row * 8 + col] : nullptr;

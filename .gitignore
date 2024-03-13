@@ -3,3 +3,12 @@
 *.ipch
 *.tlog
 *.db
+*.obj
+*.obj
+.vs/Online Chess Application/v17/.suo
+*.db-shm
+*.db-wal
+.vs/Online Chess Application/v17/HierarchyCache.v1.txt
+*.obj
+*.obj
+*.obj

@@ -24,5 +24,5 @@ public:
    Space(int r, int c, bool b) : Piece(r, c, b) {};
    char getLetter();
    void display(ogstream& gout);
-   unordered_map<int, Move> getPossibleMoves(Position posFrom, Board* board, int currentMove);
+   unordered_map<int, Move> getPossibleMoves(Position posFrom, Board* board, int currentMove, bool isPlayerWhite);
 };

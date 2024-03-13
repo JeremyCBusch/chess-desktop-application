@@ -32,9 +32,9 @@ public:
 
    char getLetter();
    void display(ogstream& gout);
-   unordered_map<int, Move> getPossibleMoves(Position posFrom, Board* board, int currentMove);
-   bool isCheckMove(Move move, vector<char>* board, int currentMove);
-   unordered_map<int, Move> getPossibleMovesSimpleBoard(Position posFrom, int currentMove, vector<char>* board, bool checkForCheck);
+   unordered_map<int, Move> getPossibleMoves(Position posFrom, Board* board, int currentMove, bool isPlayerWhite);
+   bool isCheckMove(Move move, vector<char>* board, int currentMove, bool isPlayerWhite);
+   unordered_map<int, Move> getPossibleMovesSimpleBoard(Position posFrom, int currentMove, vector<char>* board, bool checkForCheck, bool isPlayerWhite);
   
    
 };

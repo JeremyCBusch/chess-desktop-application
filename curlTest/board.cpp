@@ -128,9 +128,15 @@ void Board::reset()
     //board[(0 * 8) + 7] = rookTest2;
 }
 
-
 Board::Board() : currentMoveIndex(1)
 {
+    reset();
+}
+
+
+Board::Board(bool isWhite) : currentMoveIndex(1), playerIsWhitePieces(isWhite)
+{
+
    reset();
 }
 
@@ -162,12 +168,13 @@ void Board::display(int posHover, int posSel)
    gout.drawBoard();
    gout.drawHover(posHover);
    gout.drawSelected(posSel);
+   gout.drawRefreshButton(posSel);
 
 
    // If the selected Position was valid draw the possible moves;
    if (posSel >= 0 && posSel < 64)
    {
-      unordered_map<int, Move> possibleMoves = getPiece(posSel)->getPossibleMoves(board[posSel]->getPosition(), this, currentMoveIndex);
+      unordered_map<int, Move> possibleMoves = getPiece(posSel)->getPossibleMoves(board[posSel]->getPosition(), this, currentMoveIndex, getPlayerWhitePieces());
 
 
       for (auto itr = possibleMoves.begin(); itr != possibleMoves.end(); ++itr)
