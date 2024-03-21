@@ -134,7 +134,7 @@ Board::Board() : currentMoveIndex(1)
 }
 
 
-Board::Board(bool isWhite) : currentMoveIndex(1), playerIsWhitePieces(isWhite)
+Board::Board(bool isWhite, int GameID, string UserName) : currentMoveIndex(1), playerIsWhitePieces(isWhite), gameID(GameID), userName(UserName)
 {
 
    reset();
@@ -190,6 +190,8 @@ void Board::display(int posHover, int posSel)
 
 void Board::executeMove(Move move)
 {
+    serverConnector::ping();
+
     //Get the pieces associated with the move
     Piece* sourcePiece = board[move.getSource().getLocation()];
     Piece* destinationPiece = board[move.getDestination().getLocation()];

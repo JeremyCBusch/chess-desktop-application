@@ -3,6 +3,7 @@
 #include "move.h"
 #include "position.h"
 #include "uiInteract.h"
+#include "serverConnector.h"
 #include <vector>
 #include<iterator>
 
@@ -24,9 +25,11 @@ private:
    int currentMoveIndex; 
    void incrementCurrentMoveIndex();
    bool playerIsWhitePieces;
+   int gameID;
+   string userName;
 public:
    Board();
-   Board(bool isWhite);
+   Board(bool isWhite, int gameID, string userName);
    Board(ogstream gout);
    int getCurrentMoveIndex() { return currentMoveIndex; }
    bool whiteTurn() { return currentMoveIndex % 2 == 0; } 
@@ -40,8 +43,11 @@ public:
    static bool isValidboardIndex(int row, int col);
    vector<char>* getSimpleBoardCopy();
    static bool areOpposingColors(char firstPiece, char secondPiece);
-
+   void setPlayerIsWhitePieces(bool isWhite) { playerIsWhitePieces = isWhite; }
+   bool getPlayerIsWhitePieces() { return playerIsWhitePieces; }
    //Piece** getBoard() { return board; };
+   int getGameID() { return gameID; }
+   string getUserName(){ return userName; }
 
    bool getPlayerWhitePieces() { return playerIsWhitePieces;  }
    Piece* getPiece(int row, int col)

@@ -1,7 +1,9 @@
 #include <string>
 #include "position.h"
+#include "json.hpp"
 #include <set>
 using namespace std;
+using json = nlohmann::json;
 
 #pragma  once
 
@@ -19,10 +21,13 @@ private:
    bool standardCapture;
    bool isCheck;
 
+   string playerUserName;
+
 public:
 
    // CONSTRUCTORS
    Move(Position source, Position destination, bool enPassant = false, bool kingSideCastle = false, bool queenSideCastle = false, bool promotion = false, bool standardCapture = false);
+   Move(json jsonMove);
  
 
    // GETTERS
@@ -34,6 +39,7 @@ public:
    bool getPromotion() { return promotion; }
    bool getIsStandardCapture() { return standardCapture; }
    bool getisCheck() { return isCheck; }
+   string getPlayerUserName() { return playerUserName; }
 
    // SETTERS
    void setSource(Position& pos) { source = pos; }
@@ -44,4 +50,10 @@ public:
    void setPromotion(bool promotion) { this->promotion = promotion; }
    void setStandardCapture(bool capture) { this->standardCapture = capture; }
    void setisCheck(bool newIsCheck) { isCheck = newIsCheck; }
+   void setPlayerUserName(string newUserName) { playerUserName = newUserName; }
+
+   //JSON
+   string toJSONString();
+   string strBool(bool value) { return (value) ? "true" : "false"; }
+
 };

@@ -103,24 +103,27 @@ int dumb()
 
 
 
-	//curl = curl_easy_init();
-	//if (curl) {
-	//	curl_easy_setopt(curl, CURLOPT_POST, 1L);
-	//	//curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
-	//	curl_easy_setopt(curl, CURLOPT_URL, "localhost:8080/makeMove?gameID=1234");
-	//	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, my_write);
-	//	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-	//	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-	//	//curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
-	//	struct curl_slist* headers = NULL;
-	//	headers = curl_slist_append(headers, "Content-Type: application/json");
-	//	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-	//	const char* data = "{\r\n    \"isEnPassant\": true,\r\n	\"isKingSideCastle\": false,\r\n	\"isQueenSideCastle\": false,\r\n	\"isPromotion\": false,\r\n	\"isStandardCapture\": false,\r\n	\"isCheck\": false,\r\n	\"positionFrom\": 0,\r\n	\"positionTo\": 8\r\n}";
-	//	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
-	//	res = curl_easy_perform(curl);
-	//}
-	//curl_easy_cleanup(curl);
-	//std::cout << result << "\n\n";
+	curl = curl_easy_init();
+	if (curl) {
+		curl_easy_setopt(curl, CURLOPT_POST, 1L);
+		//curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_easy_setopt(curl, CURLOPT_URL, "localhost:8080/makeMove?gameID=1234");
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, my_write);
+		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+		//curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
+		struct curl_slist* headers = NULL;
+
+		headers = curl_slist_append(headers, "Content-Type: application/json");
+		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+		const char* data = "{\r\n    \"isEnPassant\": true,\r\n	\"isKingSideCastle\": false,\r\n	\"isQueenSideCastle\": false,\r\n	\"isPromotion\": false,\r\n	\"isStandardCapture\": false,\r\n	\"isCheck\": false,\r\n	\"positionFrom\": 0,\r\n	\"positionTo\": 8\r\n}";
+		
+		
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
+		res = curl_easy_perform(curl);
+	}
+	curl_easy_cleanup(curl);
+	std::cout << result << "\n\n";
 
 
 

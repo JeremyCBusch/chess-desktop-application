@@ -62,6 +62,7 @@ public:
    void setRow(int row);
    void setCol(int col);
    void set(int row, int col);
+   void set(int location) { this->location = location; }
 
 
 

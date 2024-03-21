@@ -1,6 +1,7 @@
 #define CURL_STATICLIB
 #include <stdio.h>
 #include <unordered_map>
+#include<tuple>
 #include "uiInteract.h"
 #include "uiDraw.h"
 #include "position.h"
@@ -9,7 +10,7 @@
 #include "game.h"
 #include "pawn.h"
 #include "move.h"
-//#include "gameSelector.h"
+#include "gameSelector.h"
 #include "curl/curl.h"
 #include "serverConnector.h"
 using namespace std;
@@ -29,7 +30,7 @@ WELCOME TO JEREMY'S TODO LIST
 
 3. so if we can add functionality to the piece class to for derived classes to inherit
 4. Add functionality for capturing of non pawn pieces.
-7. Add winner screen. perhaps try to make a 3d cube...?
+7. Add winner screen.
 8. add a header for text descriptions and buttons for promotion
 9. show text when king is in check
 20. allow promotion to any piece
@@ -70,11 +71,16 @@ void callBack(Interface* pUI, void* p)
       if (moves.count(selectedPosition) > 0)  
       {
          Move move = moves.at(selectedPosition);
+         move.setPlayerUserName(board->getUserName());
          vector<char>* fakeBoard = board->getSimpleBoardCopy();
 
          board->executeMoveOnFakeBoard(move, fakeBoard);
          board->executeMove(moves.at(selectedPosition));
          //board->move(pUI->getPreviousPosition(), selectedPositio);
+
+         // make move on server
+         serverConnector::makeMove(move, board->getGameID());
+
          pUI->clearSelectPosition();
          if (move.getisCheck())
              cout << "check\n";
@@ -88,8 +94,19 @@ void callBack(Interface* pUI, void* p)
 
    if (pUI->getSelectPosition() < 67 && pUI->getSelectPosition() > 63) {
        cout << "clicked on refresh?\n";
+       json opponentMoveJSON = serverConnector::getOpponentMove(board->getUserName(), board->getGameID());
+       if (!opponentMoveJSON.empty()) {
+           Move opponentMove = Move(opponentMoveJSON);      
+           vector<char>* fakeBoard = board->getSimpleBoardCopy();
+
+           board->executeMoveOnFakeBoard(opponentMove, fakeBoard);
+           board->executeMove(opponentMove);
+
+           pUI->clearSelectPosition();
+           if (opponentMove.getisCheck())
+               cout << "check\n";
+       }
        pUI->clearSelectPosition();
-       serverConnector::ping();
    }
 }
 
@@ -118,25 +135,25 @@ int WINAPI wWinMain(
 //{
 int main() {
 
-    //TODO: create a game selector
-    // call the game selector from main
-    // game selector will be ina  while loop until a game is create (join later)
-    // print out a menu and be able to type craete, join, list
-    // on create start a game
-    
+    //serverConnector::ping();
+    //serverConnector::makeMove();
+    // 
+   
 
-    bool isPlayerWhite;
-    //isWhite = gameSelector::menuLoop();
-    isPlayerWhite = true;
+    // 
+    tuple<int, string, gameSelectorReturnType> returnData = gameSelector::menuLoop();
 
 
-   Interface ui("Chess");
+    int gameID = get<0>(returnData);
+    string userName = get<1>(returnData);
 
-   //   // Initialize the demo
-   //   GameState demo(ptUpperRight);
-   Board board(isPlayerWhite);
-   // set everything into action
-//   ui.run(callBack, &demo);
+    Interface ui("Chess");
+    Board board(true, gameID, userName);
+   
+
+
+   if (get<2>(returnData) == 0)         //JOIN AS PLAYER TWO
+       board.setPlayerIsWhitePieces(false);
 
    ui.run(callBack, &board);
 
