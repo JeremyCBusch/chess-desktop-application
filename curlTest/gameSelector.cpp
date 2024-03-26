@@ -214,7 +214,7 @@ void gameSelector::printPotentialGames()
 string gameSelector::HTTPRequest(requestType type, string endpoint, vector<string> headers, vector<string> params)
 {
 	string url = "https://jeremy-chess-server-aa4e4177c88e.herokuapp.com/" + endpoint;
-	string testURL = "localhost:8080/" + endpoint;
+	//url = "localhost:8080/" + endpoint;
 
 	for (auto param : params)
 		url += param;

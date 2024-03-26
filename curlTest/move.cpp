@@ -70,16 +70,17 @@ string Move::toJSONString()
 	//	            "\"positionFrom\" : "      + std::to_string(source.getLocation()) + "," +
 	//	            "\"positionTo\" : "        + std::to_string(destination.getLocation()) + "," + " }";
 
-	string move = "{\"isEnPassant\":" + strBool(enPassant) + ","
+	string move = "{\"playerUserName\":\"" + playerUserName + "\","
+	"\"isEnPassant\":" + strBool(enPassant) + ","
 	"\"isKingSideCastle\":" + strBool(kingSideCastle) + ","
 	"\"isQueenSideCastle\":" + strBool(queenSideCastle) + ","
 	"\"isPromotion\":" + strBool(promotion) + ","
 	"\"isStandardCapture\":" + strBool(standardCapture) + ","
 	"\"isCheck\":" + strBool(isCheck) + ","
-	"\"positionFrom\":" + std::to_string(enPassant) + ","
-	"\"positionTo\":" + std::to_string(enPassant) +
+	"\"positionFrom\":" + std::to_string(source.getLocation()) + ","
+	"\"positionTo\":" + std::to_string(destination.getLocation()) +
 	"}";
-
+	cout << move << endl;
 	//const char* moveCSTR = move.c_str();
 	return move;
 }

@@ -19,7 +19,6 @@ private:
 	
 
 public:
-	static void ping();
 	static string makeMove(Move move, int gameID);
 	static json getOpponentMove(string userName, int gameID);
 };

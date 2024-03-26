@@ -101,31 +101,6 @@ void Board::reset()
    King* kingWhite = new King(7, 4, true);
    board[60] = kingWhite;
 
-
-    //instantiate spaces
-    //for (int i = 0; i < 8; i++)
-    //{
-    //    for (int x = 0; x < 8; x++)
-    //    {
-    //        Space* space = new Space(i, x, true);
-    //        board[(i * 8) + x] = space;
-    //    }
-    //}
-
-    //Pawn* pawnTets = new Pawn(4, 3, true);
-    //board[(4 * 8) + 3] = pawnTets;
-
-
-    //King* kingTest = new King(0, 4, false);
-    //board[(0 * 8) + 4] = kingTest;
-
-
-    //Rook* rookTest = new Rook(0, 0, false);
-    //board[(0 * 8) + 0] = rookTest;
-
-
-    //Rook* rookTest2 = new Rook(0, 7, false);
-    //board[(0 * 8) + 7] = rookTest2;
 }
 
 Board::Board() : currentMoveIndex(1)
@@ -190,7 +165,6 @@ void Board::display(int posHover, int posSel)
 
 void Board::executeMove(Move move)
 {
-    serverConnector::ping();
 
     //Get the pieces associated with the move
     Piece* sourcePiece = board[move.getSource().getLocation()];

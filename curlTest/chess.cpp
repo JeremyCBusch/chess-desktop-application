@@ -95,7 +95,9 @@ void callBack(Interface* pUI, void* p)
    if (pUI->getSelectPosition() < 67 && pUI->getSelectPosition() > 63) {
        cout << "clicked on refresh?\n";
        json opponentMoveJSON = serverConnector::getOpponentMove(board->getUserName(), board->getGameID());
+       cout << opponentMoveJSON << endl;
        if (!opponentMoveJSON.empty()) {
+           
            Move opponentMove = Move(opponentMoveJSON);      
            vector<char>* fakeBoard = board->getSimpleBoardCopy();
 

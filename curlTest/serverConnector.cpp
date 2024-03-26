@@ -11,7 +11,7 @@ static size_t my_write(void* buffer, size_t size, size_t nmemb, void* param)
 string serverConnector::HTTPRequest(requestType type, string endpoint, vector<string> headers, vector<string> params, const char* data)
 {
 	string url = "https://jeremy-chess-server-aa4e4177c88e.herokuapp.com/" + endpoint;
-	string testURL = "localhost:8080/" + endpoint;
+	//url = "localhost:8080/" + endpoint;
 	
 
 	for (auto param : params)
@@ -29,15 +29,20 @@ string serverConnector::HTTPRequest(requestType type, string endpoint, vector<st
 
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, (type == 0) ? "GET" : "POST");
 		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-		curl_easy_setopt(curl, CURLOPT_VERBOSE, 0L);
+		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, my_write);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
 		struct curl_slist* curlHeaders = NULL;
+
 		for (auto header : headers)
 			curlHeaders = curl_slist_append(curlHeaders, header.c_str());
-		curlHeaders = curl_slist_append(curlHeaders, "Content-Type: application/json");
+		
+		if (data != nullptr) {
+			curlHeaders = curl_slist_append(curlHeaders, "Content-Type: application/json");
+			curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
+		}
+		
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, curlHeaders);
-		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
 
 
 
@@ -55,20 +60,7 @@ string serverConnector::HTTPRequest(requestType type, string endpoint, vector<st
 }
 
 
-void serverConnector::ping()
-{
-	vector<string> params = vector<string>();
-	vector<string> headers = vector<string>();
-	requestType type = GET;
 
-	char* data = nullptr;
-	string response = HTTPRequest(type, "ping", headers, params, data);
-
-	json responseJSON = nlohmann::json::parse(response);
-
-
-	cout << response << endl;
-}
 
 string serverConnector::makeMove(Move move, int gameID)
 {
@@ -97,8 +89,10 @@ json serverConnector::getOpponentMove(string userName, int gameID)
 	vector<string> params = vector<string>();
 	vector<string> headers = vector<string>();
 	params.push_back("?gameID=" + std::to_string(gameID));
-	headers.push_back("?userName=" + userName);
+	headers.push_back("userName: " + userName);
 
+	cout << "params: " << params.at(0) << endl;
+	cout << "params: " << headers.at(0) << endl;
 
 
 	string response = HTTPRequest(type, "getOpponentMove", headers, params, nullptr);

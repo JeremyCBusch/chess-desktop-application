@@ -14,3 +14,8 @@
 *.obj
 *.opendb
 *.obj
+*.dll
+*.pdb
+*.obj
+*.obj
+curlTest/x64/Debug/Rook.obj
